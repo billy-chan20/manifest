@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Developer Guide | Android 16 Base BSP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav-bar">
+  <div class="container">
+    <div class="nav-logo">edge-aosp-bsp</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="release-notes.html">Release Notes</a></li>
+      <li><a href="getting-started.html">Getting Started</a></li>
+      <li><a href="developer-guide.html" class="active">Developer Guide</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="disclaimer.html">Disclaimer</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="breadcrumb"><a href="index.html">Overview</a><span class="sep">/</span><span class="current">Developer Guide</span></div>
+</div>
+
+<div class="container">
+  <div class="doc-layout">
+    <aside class="sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">On this page</div>
+        <a href="#static-location-service">Static Location Service</a>
+        <a href="#read-location">Read Location</a>
+        <a href="#write-location">Write / Update Location</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Other docs</div>
+        <a href="release-notes.html">Release Notes</a>
+        <a href="getting-started.html">Getting Started Guide</a>
+      </div>
+    </aside>
+
+    <main class="doc-content">
+      <span class="badge badge-new">Release 1.0 &middot; PV &middot; July 2026</span>
+      <h1 style="margin-top:16px;">Developer Guide</h1>
+      <p style="font-size:16px;">Provides API references for application developers who build applications on the Android* 16 Base BSP Reference Release for Edge Platforms.</p>
+
+      <h2 id="static-location-service">Static Location Service</h2>
+      <p>This section provides guidance for application developers to read or write the device's statically configured location.</p>
+
+      <h3>Location Provider</h3>
+      <p>Use the following location-provider name when calling the <code>LocationManager</code> API to read the location:</p>
+      <pre><code>"static"</code></pre>
+
+      <h2 id="read-location">Read Location</h2>
+      <p>Applications can use this provider to determine the device's location.</p>
+      <h3>Required Android Permission</h3>
+      <pre><code>&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /&gt;</code></pre>
+      <h3>Sample Code</h3>
+      <pre><code>LocationManager lm = (LocationManager)getSystemService(LocationManager.class);
+
+Location location = lm.getLastKnownLocation("static");
+
+if (location != null) {
+
+    double lat = location.getLatitude();
+    double lon = location.getLongitude();
+
+    Log.d("STATIC_PROVIDER", "Lat=" + lat + " Lon=" + lon);
+}</code></pre>
+
+      <h2 id="write-location">Write / Update Location</h2>
+      <p>Manageability applications use this provider to configure the device's static location during provisioning.</p>
+      <div class="note"><strong>Note:</strong> This feature is supported only for privileged/system applications.</div>
+      <h3>Required Permission</h3>
+      <pre><code>&lt;uses-permission android:name="android.permission.LOCATION_HARDWARE" /&gt;</code></pre>
+      <h3>Sample Code</h3>
+      <pre><code>IBinder binder = ServiceManager.getService("location_control");
+
+ILocationControlService service = ILocationControlService.Stub.asInterface(binder);
+
+service.setHalLocation(12.9716, 77.5946);</code></pre>
+
+      <div class="note">For release details, see <a href="release-notes.html">Release Notes</a>. For build and flashing instructions, see the <a href="getting-started.html">Getting Started Guide</a>. Contact your Intel representative or email to <a href="http://premiersupport.intel.com/">premiersupport.intel.com</a> for support.</div>
+    </main>
+  </div>
+</div>
+
+<footer style="margin-top:64px;">
+  <div class="container">
+    <div><strong style="color:#fff;">edge-aosp-bsp</strong><br>Android BSP Reference Release Documentation</div>
+    <div class="legal">&copy; Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.</div>
+  </div>
+</footer>
+
+</body>
+</html>

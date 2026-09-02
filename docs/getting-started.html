@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Getting Started | Android 16 Base BSP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav-bar">
+  <div class="container">
+    <div class="nav-logo">edge-aosp-bsp</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="release-notes.html">Release Notes</a></li>
+      <li><a href="getting-started.html" class="active">Getting Started</a></li>
+      <li><a href="developer-guide.html">Developer Guide</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="disclaimer.html">Disclaimer</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="breadcrumb"><a href="index.html">Overview</a><span class="sep">/</span><span class="current">Getting Started</span></div>
+</div>
+
+<div class="container">
+  <div class="doc-layout">
+    <aside class="sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">On this page</div>
+        <a href="#prerequisites">Prerequisites</a>
+        <a href="#build-environment">Set Up the Build Environment</a>
+        <a href="#download-build">Download and Build the Source Code</a>
+        <a href="#flashing">Flash and Boot Up the System</a>
+        <a href="#bios-settings">BIOS Settings</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Other docs</div>
+        <a href="release-notes.html">Release Notes</a>
+        <a href="developer-guide.html">Developer Guide</a>
+      </div>
+    </aside>
+
+    <main class="doc-content">
+      <span class="badge badge-new">Release 1.0 &middot; PV &middot; July 2026</span>
+      <h1 style="margin-top:16px;">Getting Started Guide</h1>
+      <p style="font-size:16px;">Build and flash Android 16* Base BSP on Intel&reg; Core&trade; Processor (14th Gen) for Edge Platforms.</p>
+
+      <div class="note">Review the <a href="release-notes.html">Release Notes</a> before proceeding with this guide.</div>
+
+      <h2 id="prerequisites">Prerequisites</h2>
+      <h3>Build Host</h3>
+      <ul>
+        <li>64-bit workstation running Ubuntu* 22.04 (Jammy Jellyfish)</li>
+        <li>Python 3.6 or later</li>
+        <li>At least 400 GB free disk space</li>
+      </ul>
+      <h3>Target Hardware</h3>
+      <ul>
+        <li>Intel&reg; Core&trade; Processor (14th Gen) for Edge Platforms silicon</li>
+        <li>Minimum 500 GB storage</li>
+        <li>Latest IFWI flashed (see Document <a href="https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=852225">852225</a>)</li>
+        <li>High-speed network connectivity</li>
+      </ul>
+      <div class="note"><strong>Note:</strong> Intel recommends building on Ubuntu* 22.04. See <a href="https://source.android.com/docs/setup/start/requirements">Establishing a Build Environment</a> on the AOSP website for other OS configurations.</div>
+
+      <h2 id="build-environment">Set Up the Build Environment</h2>
+      <p>Install the repo tool:</p>
+      <pre><code>mkdir -p ~/bin
+curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo
+chmod a+x ~/bin/repo
+export PATH=~/bin:$PATH</code></pre>
+      <p>Install required packages on Ubuntu 22.04 LTS:</p>
+      <pre><code>sudo apt-get update
+sudo apt-get install -y wget openjdk-8-jdk git ccache automake \
+   lzop bison gperf build-essential zip curl \
+   zlib1g-dev g++-multilib python3-networkx \
+   libxml2-utils bzip2 libbz2-dev libbz2-1.0 \
+   ninja-build cmake pkg-config xorriso mtools file
+sudo pip3 install meson==1.8.3 mako==1.1.0 dataclasses pycryptodome ply==3.11</code></pre>
+      <div class="note"><strong>If you encounter proxy issues,</strong> disable proxy with <code>unset no_proxy</code> / <code>unset NO_PROXY</code>, then run apt with <code>sudo -E apt update</code>.</div>
+
+      <h2 id="download-build">Download and Build the Source Code</h2>
+      <p>Manifest for this release: <code>BM_BSP_2026_Q3_V1_A16.xml</code> (<a href="https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/">GitHub</a>).</p>
+      <pre><code>mkdir ~/rpl-android-bm
+cd ~/rpl-android-bm
+
+repo init -u https://github.com/edge-aosp-bsp/manifest.git
+mkdir .repo/manifests
+cp ~/BM_BSP_2026_Q3_V1_A16.xml .repo/manifests/.
+repo init -u https://github.com/edge-aosp-bsp/manifest.git -m BM_BSP_2026_Q3_V1_A16.xml
+
+repo sync -c --force-sync -j16
+repo forall -c git lfs pull</code></pre>
+      <div class="note">Synchronization can take a longer time. This behavior is expected. Adjust <code>-j</code> based on your preferred CPU cores.</div>
+
+      <h3>Integrate the Trusty Binary</h3>
+      <pre><code>cp lk.bin ~/rpl-android-bm/vendor/intel/fw/trusty-release-binaries/</code></pre>
+      <p>Contact your Intel representative for access to the Trusty source and build procedure.</p>
+
+      <h3>Build the Android Image</h3>
+      <pre><code>source build/envsetup.sh
+lunch caas-userdebug
+make flashfiles BASE_LINUX_INTEL_LTS2024_KERNEL=true -j16
+
+find out -name *.tar.gz
+# out/target/product/caas/caas-releasefile-userdebug.iso.tar.gz
+# out/target/product/caas/caas-releasefiles-userdebug.tar.gz</code></pre>
+
+      <h2 id="flashing">Flash and Boot Up the System</h2>
+      <h3>Step 1: Flash the Image to a USB Drive</h3>
+      <p>On Windows*, use <a href="https://rufus.ie/en/">Rufus</a> to write <code>caas-flashfile-&lt;variant&gt;.iso.zip</code> to a USB drive. On Ubuntu*, use <code>dd</code>:</p>
+      <pre><code>unzip caas-flashfile-userdebug.iso.zip
+dd if=./caas-flashfile-userdebug.iso of=/dev/sdc bs=1024M</code></pre>
+      <div class="note"><strong>Important:</strong> Replace <code>/dev/sdc</code> with your actual target USB device node.</div>
+      <h3>Step 2: Boot the System to Android</h3>
+      <ol>
+        <li>Insert the USB drive into the board.</li>
+        <li>Press <strong>F2</strong> while booting.</li>
+        <li>Navigate: Boot Maintenance &rarr; Boot Option Menu &rarr; Change Boot Order.</li>
+        <li>Set the USB drive as the first boot option, save (Fn + F4), and continue.</li>
+        <li>Proceed with installation, and wait for flashing to complete.</li>
+        <li>Remove the USB drive, and then reboot. Android will start automatically.</li>
+      </ol>
+      <div class="note">You can select NVMe or SATA as the storage target.</div>
+
+      <h2 id="bios-settings">BIOS Settings</h2>
+      <table class="table-spec">
+        <tr><th>Setting</th><th>Menu Path</th><th>Value</th></tr>
+        <tr><td>Intel (VMX) Virtualization</td><td>Advanced &rarr; CPU Configuration</td><td>Enabled</td></tr>
+        <tr><td>VT-d</td><td>Advanced &rarr; System Agent (SA) Configuration</td><td>Enabled</td></tr>
+        <tr><td>Intel&reg; TCC Mode</td><td>Advanced &rarr; Time Coordinated Computing</td><td>Disabled</td></tr>
+        <tr><td>#AC Split Lock</td><td>Advanced &rarr; Time Coordinated Computing</td><td>Disabled</td></tr>
+        <tr><td>OnBoard NIC</td><td>Advanced &rarr; PCH-IO Configuration &rarr; EFI Network</td><td>OnBoard NIC</td></tr>
+      </table>
+
+      <div class="note">For complete release information, see the <a href="release-notes.html">Release Notes</a>, or email to <a href="http://premiersupport.intel.com/">premiersupport.intel.com</a>. For legal notices, see the <a href="disclaimer.html">Disclaimer</a> page. Contact your Intel representative for support.</div>
+    </main>
+  </div>
+</div>
+
+<footer style="margin-top:64px;">
+  <div class="container">
+    <div><strong style="color:#fff;">edge-aosp-bsp</strong><br>Android BSP Reference Release Documentation</div>
+    <div class="legal">&copy; Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.</div>
+  </div>
+</footer>
+
+</body>
+</html>
