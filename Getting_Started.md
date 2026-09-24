@@ -1,12 +1,12 @@
 # Getting Started Guide
-## Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen))
-Release 1.0
+## Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355)
+Release 1.1 (MR1 release)
 
-July 2026
+September 2026
 
 # Introduction
 
-This document provides instructions for building and loading Android\* 16 on Intel® Core™ Processor (14th Gen)(code named Raptor Lake-S Refresh) for Edge Platforms.
+This document provides instructions for building and loading Android\* 16 on Intel® Core™ Processor (14th Gen) (code named Raptor Lake-S Refresh), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355 (Code named Twin Lake) for Edge Platforms.
 
 >**Note:**
 >The versions of the Android Common Kernel and AOSP open-source software components referenced in this release represent the Intel-validated baseline for the platform. Customers are encouraged to evaluate and integrate updates to these open-source components as they become available from the open-source community.
@@ -15,74 +15,75 @@ You are recommended to review the release information before proceeding
 with this Getting Started Guide. For release information, notes, and
 references, refer to the following documents:
 
-* Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen)) Release Notes (Published in [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/README.md)) 
+* Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355) Release Notes (Published in [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/BM_BSP_2026_Q3_V2_A16/README.md))
 
 # Terminology
 
-| Term            | Description                                                            |
-| --------------- | ---------------------------------------------------------------------- |
-| adb             | Android Debug Bridge                                                   |
-| AOSP            | Android Open-Source Project                                            |
-| BIOS            | Basic Input/Output System                                              |
-| BM              | Bare Metal refers to an Android system that runs without a hypervisor. |
-| BSP             | Board Support Package                                                  |
-| CRB             | Customer Reference Board                                               |
-| EC              | Engineering Candidate                                                  |
-| GIT             | Git — Version control system                                           |
-| HDA             | High-Definition Audio                                                  |
-| IFWI            | Intel Firmware Interface                                               |
-| ISO             | ISO image — Disk image format                                          |
-| ISV             | Independent Software Vendor                                            |
-| LTS             | Long-Term Support                                                      |
-| NIC             | Network Interface Card                                                 |
-| NVMe            | Non-Volatile Memory Express                                            |
-| OS              | Operating System                                                       |
-| PCH‑IO          | Platform Controller Hub — I/O Configuration                            |
-| Raptor Lake-S R | Intel® Core™ Processor (14th Gen)                                      |
-| RDC             | Resource and Documentation Center                                      |
-| RVP             | Reference Validation Platform                                          |
-| SATA            | Serial ATA (Serial Advanced Technology Attachment)                     |
-| SELinux         | Security-Enhanced Linux                                                |
-| TCC             | Intel® Time Coordinated Computing                                      |
-| UEFI            | Unified Extensible Firmware Interface                                  |
-| USB             | Universal Serial Bus                                                   |
-| VMX             | Virtual Machine Extensions                                             |
-| VT-d            | Virtualization Technology for Directed I/O                             |
-
+| Term                  | Description                                                            |
+| --------------------- | ---------------------------------------------------------------------- |
+| adb                   | Android Debug Bridge                                                   |
+| AOSP                  | Android Open-Source Project                                            |
+| AVF                   | Android Virtualization Framework                                       |
+| BIOS                  | Basic Input/Output System                                              |
+| BM                    | Bare Metal refers to an Android system that runs without a hypervisor. |
+| BSP                   | Board Support Package                                                  |
+| CRB                   | Customer Reference Board                                               |
+| EC                    | Engineering Candidate                                                  |
+| Git                   | Git — Version control system                                           |
+| HDA                   | High-Definition Audio                                                  |
+| IFWI                  | Intel Firmware Interface                                               |
+| ISO                   | ISO image — Disk image format                                          |
+| ISV                   | Independent Software Vendor                                            |
+| LTS                   | Long-Term Support                                                      |
+| NIC                   | Network Interface Card                                                 |
+| NVMe                  | Non-Volatile Memory Express                                            |
+| OS                    | Operating System                                                       |
+| OSV                   | Operating System Vendor                                                |
+| PCH‑IO                | Platform Controller Hub — I/O Configuration                            |
+| Raptor Lake-S Refresh | Intel® Core™ Processor (14th Gen)                                      |
+| RDC                   | Resource and Documentation Center                                      |
+| RVP                   | Reference Validation Platform                                          |
+| SATA                  | Serial ATA (Serial Advanced Technology Attachment)                     |
+| SELinux               | Security-Enhanced Linux                                                |
+| TCC                   | Intel® Time Coordinated Computing                                      |
+| TEE                   | Trusted Execution Environment                                          |
+| Trusty                | Secure operating system that provides a TEE for Android                |
+| Twin Lake             | Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355            |
+| UEFI                  | Unified Extensible Firmware Interface                                  |
+| USB                   | Universal Serial Bus                                                   |
+| VMX                   | Virtual Machine Extensions                                             |
+| VT-d                  | Virtualization Technology for Directed I/O                             |
 
 ## Intended Audience
 
-This document is intended for OSVs/ISVs interested in using Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen)) to enable their customers.
+This document is intended for OSVs/ISVs interested in using Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355) to enable their customers.
 
 ## Customer Support
 
 Contact your Intel representative for support or submit issues to
 [premiersupport.intel.com](http://premiersupport.intel.com/).
 
-
-
 # Overview and Prerequisites
 
-Android\* BSP is a reference implementation used for testing hardware
-feature enablement. This document provides step-by-step instructions for
-building the Android Bare Metal image and installing it on the Intel®
-Core™ Processor (14th Gen) platform.
+Android\* BSP is a reference implementation used for testing hardware feature enablement. This document provides step-by-step instructions for building the Android Bare Metal image and installing it on the Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355 platforms.
 
-## Requirement
+## Requirements
 
 ### **Build Host Machine**
-* A **64-bit development workstation** running the
-Ubuntu\* 22.04 (Jammy Jellyfish) operating system.
-* **Python version 3.6 or later**. This requirement aligns with the latest repo command
-released by Google.
-* At least **400GB of free disk space** on the
-workstation is required to check out the source code and store build
-artifacts.
+* A **64-bit development workstation** running the Ubuntu\* 22.04 (Jammy Jellyfish) operating system.
+* **Python version 3.6 or later**. This requirement aligns with the latest repo command released by Google.
+* At least **400GB of free disk space** on the workstation is required to check out the source code and store build artifacts.
 
-### **Intel® Core™ Processor (14th Gen)** for Edge Platforms 
-* Contains the latest supported **Intel® Core™ Processor (14th Gen) for Edge Platforms** silicon.
-* A minimum of **500 GB of storage**. 
-* Flashed with the latest IFWI. Refer to the 13th Gen Intel® Core™ Desktop Processors (Code named Raptor Lake-S) and Intel® Core™ Processor (14th Gen) (Code named Raptor Lake-S Refresh) for Edge Platforms Reference UEFI BIOS/IFWI (ver. 7117_51) [Document Number: 852225](https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=852225) for the IFWI details.
+### **Supported Intel® Platforms for Edge Platforms**
+* The target system must contain the latest supported silicon from one of the following platforms:
+  - Intel® Core™ Processor (14th Gen) (code named Raptor Lake-S Refresh)
+  - Intel® Core™ 3 Processor N355 (code named Twin Lake)
+  - Intel® Processor N150 (code named Twin Lake)
+  - Intel® Processor N250 (code named Twin Lake)
+* A minimum of **400 GB of storage**. 
+* Flashed with the latest IFWI corresponding to the target platform:
+  - **Raptor Lake-S Refresh**: Use Reference UEFI BIOS/IFWI version 7117_51. See [Document Number: 852225](https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=852225)
+  - **Twin Lake (N355, N250, N150)**: Use Reference UEFI BIOS/IFWI version 7113_51. See [Document Number: 919389](https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=919389) 
 * **High-speed network** connectivity.
 
 ### Notes:
@@ -94,8 +95,8 @@ artifacts.
 
 ## Set up the Build Environment
 
-The Android source code consists of multiple Git\* repositories. The
-repo tool makes it easy to work with those repositories. Refer to the
+The Android source code is distributed across multiple Git\* repositories. The
+repo tool simplifies the process of managing and synchronizing those repositories. Refer to the
 [Git Setup for Build Environment](#git-setup-for-build-environment) if you need to set up Git on your build machine.
 
 1.  Create a local bin/ directory, download the repo tool to that directory, and make the binary executable with the following commands:
@@ -107,7 +108,7 @@ chmod a+x ~/bin/repo
 export PATH=~/bin:$PATH
 ```
 
-2.  Install the following required packages on your 64-bit Ubuntu 22.04 LTS development workstation before the compilation:
+2.  Install the following required packages on your 64-bit Ubuntu 22.04 LTS development workstation before the building the Android BSP:
 ```bash
 sudo apt-get update
 sudo apt-get install -y wget openjdk-8-jdk git ccache automake \
@@ -153,8 +154,11 @@ unset no_proxy
 unset NO_PROXY
 export no_proxy=localhost
 export NO_PROXY=localhost
-In some cases, the system may use the system default no_proxy configuration. To override this behaviour, set a dummy no_proxy value.
+```
+In some cases, the system may use the system default no_proxy configuration. To override this behavior, set a dummy no_proxy value.
 After updating the no_proxy settings, run apt commands using the -E option:
+
+```bash
 sudo -E apt update
 sudo -E apt install … 
 ```
@@ -163,14 +167,14 @@ sudo -E apt install …
 
 This section outlines the procedures for downloading the Android source code using the specified manifest and for building the Android BSP.
 
-The manifest for this release is available for download from [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/) directory.
+The release manifest is available in the [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/) repository.
 
-The manifest for this release is **BM_BSP_2026_Q3_v1_A16.xml**
+The manifest for this release is **BM_BSP_2026_Q3_V2_A16.xml**
 
-1.  Download the manifest: **BM_BSP_2026_Q3_v1_A16.xml**
+1.  Download the manifest: **BM_BSP_2026_Q3_V2_A16.xml**
 
 ```bash 
-mv BM_BSP_2026_Q3_v1_A16.xml ~/.
+mv BM_BSP_2026_Q3_V2_A16.xml ~/.
 ```
 2.  Create a working directory.
 ```bash 
@@ -184,9 +188,9 @@ repo init -u https://github.com/edge-aosp-bsp/manifest.git
 
 # copy the manifest to .repo/manifests
 mkdir .repo/manifests
-cp ~/BM_BSP_2026_Q3_v1_A16.xml .repo/manifests/.
+cp ~/BM_BSP_2026_Q3_V2_A16.xml .repo/manifests/.
 
-repo init -u https://github.com/edge-aosp-bsp/manifest.git -m BM_BSP_2026_Q3_v1_A16.xml
+repo init -u https://github.com/edge-aosp-bsp/manifest.git -m BM_BSP_2026_Q3_V2_A16.xml
 
 # Sync the repositories
 repo sync -c --force-sync -j16
@@ -204,30 +208,84 @@ repo forall -c git lfs pull
 
 ## Build Instructions
 
-### Integrate the Trusty Binary
-The Trusty binary (`lk.bin`) must be built separately and placed in the following directory:
+### Trusty and AVF Feature Configuration
 
-```
-cp lk.bin ~/rpl-android-bm/vendor/intel/fw/trusty-release-binaries/
-```
+AVF and Trusty cannot be enabled at the same time. Choose the build that matches your platform and required feature:
 
-This is a prerequisite before proceeding with `Building the Android Image`.
+| Build             | Trusty   | AVF      | Supported Platforms                                                                                            | Env var (before `lunch`)     | Make flag          |
+| ----------------- | -------- | -------- | -------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------ |
+| **Default Build** | Disabled | Disabled | Intel® Core™ Processor (14th Gen), Intel® Core™ 3 Processor N355, Intel® Processor N150, Intel® Processor N250 | `export ENABLE_TRUSTY=false` | `ENABLE_AVF=false` |
+| **Trusty Build**  | Enabled  | Disabled | Intel® Core™ Processor (14th Gen) only                                                                         | `export ENABLE_TRUSTY=true`  | `ENABLE_AVF=false` |
+| **AVF Build**     | Disabled | Enabled  | Intel® Core™ Processor (14th Gen) only                                                                         | `export ENABLE_TRUSTY=false` | `ENABLE_AVF=true`  |
 
 > **Note:**
-> Contact your Intel representative to gain access to the Trusty source code and build procedure.
+> If you are building for Intel® Core™ 3 Processor N355, Intel® Processor N150, or Intel® Processor N250, use the **Default Build** — the AVF Build and Trusty Build are not available on these platforms.
+>
+> Each build below sets `lunch caas-userdebug` as the build target. Use `caas-userdebug` for development and debugging (includes root access and debug tools); use `caas-user` for a production-style build intended for release testing.
 
-### Building the Android Image
-Build the image from the source code based on the instructions below.
+### Default Build (Trusty Disabled, AVF Disabled)
+
 ```bash
+# Export the Trusty flag before `lunch`
+export ENABLE_TRUSTY=false
+
 # Prepare build environment
 source build/envsetup.sh
+
 # Build target can be caas-user or caas-userdebug
 lunch caas-userdebug
 
 # Start the build
-make flashfiles BASE_LINUX_INTEL_LTS2024_KERNEL=true -j16
+make flashfiles BASE_LINUX_INTEL_LTS2024_KERNEL=true ENABLE_AVF=false -j16
+```
 
-# build output
+### Trusty Build (Trusty Enabled, AVF Disabled)
+Supported only on Intel® Core™ Processor (14th Gen).
+
+**Step 1: Copy the Trusty binary**
+```bash
+cp lk.bin ~/rpl-android-bm/vendor/intel/fw/trusty-release-binaries/
+```
+> **Note:** Contact your Intel representative for access to the Trusty source code and build procedure.
+
+**Step 2: Build with Trusty enabled**
+```bash
+# Export the Trusty flag before `lunch`
+export ENABLE_TRUSTY=true
+
+# Prepare build environment
+source build/envsetup.sh
+
+# Build target can be caas-user or caas-userdebug
+lunch caas-userdebug
+
+# Start the build
+make flashfiles BASE_LINUX_INTEL_LTS2024_KERNEL=true ENABLE_AVF=false -j16
+```
+
+### AVF Build (Trusty Disabled, AVF Enabled)
+Supported only on Intel® Core™ Processor (14th Gen).
+
+**Disclaimer:** AVF capability in the Intel Android 16 BSP is based on Google’s Android 16 AOSP implementation, has limited maturity for x86 platforms. For x86 devices, AVF operates using non-protected virtual machines, does not support protected virtual machines, lacks CTS/VTS coverage, and may not receive Google security updates for AVF-related x86 code paths. Accordingly, Intel makes no representation or warranty regarding security isolation, certification compliance, the availability of AVF-related security updates, or the continued availability of future AOSP or Google support for these features.
+
+```bash
+# Export the Trusty flag before `lunch`
+export ENABLE_TRUSTY=false
+
+# Prepare build environment
+source build/envsetup.sh
+
+# Build target can be caas-user or caas-userdebug
+lunch caas-userdebug
+
+# Start the build with AVF enabled
+make flashfiles BASE_LINUX_INTEL_LTS2024_KERNEL=true ENABLE_AVF=true -j16
+```
+
+### Build Output
+The generated build output files are available at the following directory:
+
+```bash
 find out -name *.tar.gz
 out/target/product/caas/caas-releasefile-userdebug.iso.tar.gz
 out/target/product/caas/caas-releasefiles-userdebug.tar.gz
@@ -236,15 +294,15 @@ out/target/product/caas/caas-releasefiles-userdebug.tar.gz
 # ~/rpl-android-bm/out/target/product/caas/
 ```
 
-# Android\* Image Flashing and Boot up
+# Android\* Image Flashing and Boot-Up
 
 This section describes the steps required to configure the BIOS and prepare the USB drive for flashing the image to the board.
 
 ## BIOS Settings 
 
-Users must verify that the settings are correct. These should be the IFWI\'s default settings.
+Verify that the BIOS settings match the values in the following table. These values are the default settings for the supported IFWI versions.
 
-Press the hotkey (such as F2, DEL, or F12) during startup to access the BIOS menu.
+Press the appropriate BIOS setup key (for example F2, Del, or F12) during startup to access the BIOS Setup menu.
 
 ### BIOS Configuration
 
@@ -259,6 +317,8 @@ Press the hotkey (such as F2, DEL, or F12) during startup to access the BIOS men
 
 > **Note:**
 > The steps may vary depending on the BIOS.
+>
+> Intel® TCC Mode and #AC Split Lock are disabled by default because they are intended for real-time/deterministic workloads and are not required for standard Android BSP bring-up; leave them disabled unless your use case specifically requires TCC.
 
 ## Flash Image to USB Drive
 
@@ -266,14 +326,14 @@ There are two steps to flash **caas-flashfile-\<\$variant\>.iso.zip** to the sy
 
 ### Step 1: Flash Image to the USB Drive
 
-On a Windows\* machine, use the Rufus application or another tool to create a bootable USB stick from **caas-flashfile-\<\$variant\>.iso.zip** to USB drive. The Rufus app can be downloaded from <https://rufus.ie/en/>
+On a Windows\* machine, use Rufus or similar tool to create a bootable USB stick from **caas-flashfile-\<\$variant\>.iso.zip** to USB drive. The Rufus app can be downloaded from <https://rufus.ie/en/>
 
 First, extract the caas-flashfile-\<\$variant\>.iso.zip file.
 
 #### Select the ISO Image to Flash
 
 <p align="center">
-  <img src="./media/image1.png" alt="Select the ISO Image to Flash" />
+  <img src="./media/image1.png" alt="Select the ISO Image to Flash"/>
 </p>
 
 #### Example of Flashing in Progress
@@ -299,7 +359,7 @@ dd if=./caas-flashfile-userdebug.iso of=/dev/sdc bs=1024M
 
 ```
 
-### Step 2: Boot up the System to Android
+### Step 2: Boot the System into Android
 
 1. Insert the USB drive into the board.
 2. Press **F2** while booting the device.
@@ -318,21 +378,21 @@ dd if=./caas-flashfile-userdebug.iso of=/dev/sdc bs=1024M
 
 ![Installer Screen](./media/image5.png)
 
-6. This initiates the flashing. 
+6. This action starts the Android installation process. 
 
 **Android Installation Progress**
 
 ![Android Installation Progress](./media/image6.png)
 
-7. Remove the USB drive and reboot. The device will finish flashing and
-start Android.
+7. After the installation completes, remove the USB drive and reboot the system. The device completes the installation and
+boots into Android.
 
 #### Android Home Screen
 
 ![Android Home Screen](./media/image7.png)
 
 > **Note:**
-> You can select to use NVME or SATA as the storage.
+> You can use either an NVMe or SATA as the storage device.
 
 ## Git Setup for Build Environment
 Git must be set up on your build machine to run repo init. Use the command below as a guideline:  
@@ -423,12 +483,168 @@ service.setHalLocation(12.9716, 77.5946);
 ```
 
 ---
+# Developer Guide for Validating Trusty Enablement
+
+Trusty is a secure operating system that provides a Trusted Execution Environment (TEE) for Android and supports security services, including Gatekeeper and KeyMint. In this release, Trusty is supported only on Intel® Core™ Processor (14th Gen). Use the steps below to confirm that Trusty is correctly enabled on the flashed device.
+
+> **Note:**
+> Run these checks using `adb` after the device has fully booted into Android. The image must be built with Trusty enabled (see [Trusty Build](#trusty-build-trusty-enabled-avf-disabled)).
+
+## Step 1: Verify the Trusty HAL Properties
+
+Confirm that the Gatekeeper and Keystore hardware-selection properties are set to Trusty.
+
+Check the Gatekeeper property:
+
+```bash
+adb shell getprop ro.hardware.gatekeeper
+```
+
+Expected output:
+
+```
+trusty
+```
+
+Check the Keystore property:
+
+```bash
+adb shell getprop ro.hardware.keystore
+```
+
+Expected output:
+
+```
+trusty
+```
+
+## Step 2: Verify the Trusty Device Nodes Are Present
+
+Verify that the Trusty IPC and log device nodes are exposed by the kernel:
+
+```bash
+adb shell ls -la /dev/trusty*
+```
+
+Expected output (device numbers may vary):
+
+```
+crw-rw---- 1 system drmrpc 246,   0 2026-09-16 18:18 /dev/trusty-ipc-dev0
+crw------- 1 root   root    10, 259 2026-09-16 18:18 /dev/trusty-log0
+```
+
+The check passes when both `/dev/trusty-ipc-dev0` and `/dev/trusty-log0` are listed.
+## Step 3: Confirm the KeyMint and Gatekeeper Services Are Backed by Trusty
+
+Verify that the Trusty-backed KeyMint and Gatekeeper HAL services are running:
+
+```bash
+adb shell ps -ef | grep -iE "keymint|gatekeeper"
+```
+
+Example output (PIDs, start times, and formatting may vary):
+
+```
+nobody         369     1 0 23:18:01 ?     00:00:00 android.hardware.security.keymint-service.rust.trusty --dev /dev/trusty-ipc-dev0
+system         612     1 0 23:18:09 ?     00:00:00 android.hardware.gatekeeper-service.trusty --dev /dev/trusty-ipc-dev0
+system         728     1 0 23:18:10 ?     00:00:00 gatekeeperd /data/misc/gatekeeper
+```
+
+The Trusty-specific KeyMint and Gatekeeper HAL executables are the primary indicators that Trusty is enabled. Both `android.hardware.security.keymint-service.rust.trusty` and `android.hardware.gatekeeper-service.trusty` must be present to confirm that the two HAL services are backed by Trusty. If `android.hardware.gatekeeper-service.nonsecure` appears instead, Gatekeeper is running without Trusty backing.
+
+The `gatekeeperd` process is expected, but its presence alone does not prove that Trusty is enabled. Verify that the Trusty-specific HAL executables shown above are also running.
+
+> **Note:** If any of the checks above fail, verify that the target platform is Intel® Core™ Processor (14th Gen), export `ENABLE_TRUSTY=true` before running `lunch`, and pass `ENABLE_AVF=false` to the `make` command. In this BSP configuration, Trusty and AVF are mutually exclusive; a build with AVF enabled will not expose Trusty.
+
+---
+# Developer Guide for Validating Android Virtualization Framework (AVF) Enablement
+
+On this Intel x86_64 BSP, AVF is configured to support non-protected VMs using KVM. Protected VMs are not supported. Use the steps below to confirm that AVF is correctly enabled on the flashed device.
+
+
+> **Note:**
+> This guide assumes the image was built using the **AVF Build** which is supported only on Intel® Core™ Processor (14th Gen) (see [Trusty and AVF Feature Configuration](#trusty-and-avf-feature-configuration)). Run these checks using `adb` after the device has fully booted to Android. Ensure  Intel® (VMX) Virtualization and Intel® VT-d are **Enabled** in the BIOS (see the BIOS Configuration section).
+
+## Step 1: Verify the Hypervisor Capability Properties
+
+Confirm that the platform advertises the expected KVM hypervisor capabilities to the Android framework:
+
+```bash
+adb shell getprop ro.boot.hypervisor.vm.supported
+adb shell getprop ro.boot.hypervisor.protected_vm.supported
+adb shell getprop ro.boot.hypervisor.version
+```
+
+Expected values:
+
+| Property                                    | Expected Value | What does it mean?                        |
+| ------------------------------------------- | -------------- | ------------------------------------------ |
+| `ro.boot.hypervisor.vm.supported`           | `1`            | Non-Protected VMs are supported            |
+| `ro.boot.hypervisor.protected_vm.supported` | `0`            | Protected VMs are not supported            |
+| `ro.boot.hypervisor.version`                | `kvm`          | This BSP identifies KVM as its hypervisor. |
+These properties advertise the platform’s hypervisor capabilities. However, these properties alone do not confirm that a VM can be launched successfully.
+## Step 2: Confirm the KVM Device Node Is Present
+
+Verify that the KVM device node is exposed by the kernel:
+
+```bash
+adb shell ls -l /dev/kvm
+```
+
+The command should list the `/dev/kvm` character device. If the device node is missing, verify that the image was built using the AVF Build configuration with Trusty disabled, that Intel® VMX virtualization is enabled in the BIOS, and that the KVM and KVM-Intel kernel components were initialized successfully. Check the kernel logs for KVM initialization errors if the problem persists.
+
+## Step 3: Verify the AVF User-Space Components
+
+Verify that the `com.android.virt` APEX and the `vm` tool are available:
+
+```bash
+adb shell ls /apex/com.android.virt/bin/vm
+```
+
+The `vm` binary should be listed, confirming that the AVF APEX and command-line tool are installed on the image. This check alone does not confirm that KVM is usable or that a VM can be started.
+
+## Step 4: Query AVF Using the `vm` Tool
+
+Verify the available AVF binaries, and then run the `vm` info command to confirm that the framework reports virtualization support. The following shows example output from the validated image; VFIO status, assignable devices, and debug-policy values may vary by configuration.
+
+```bash
+adb shell ls /apex/com.android.virt/bin/
+
+crosvm
+early_virtmgr
+fd_server
+vfio_handler
+virtmgr
+virtualizationservice
+vm
+vmnic
+```
+
+```bash
+adb shell /apex/com.android.virt/bin/vm info
+
+Only non-protected VMs are supported.
+Hypervisor version: kvm
+/dev/kvm exists.
+/dev/vfio/vfio exists.
+VFIO-platform is not supported.
+Assignable devices: []
+Available OS list: ["microdroid"]
+Debug policy: Ok(DebugPolicy { log: false, ramdump: false, adb: false })
+```
+
+The command should return successfully and report that non-protected VM support is available, the hypervisor version is kvm, /dev/kvm exists, and microdroid is listed as an available OS. A successful vm info result confirms that AVF is configured and the virtualization service is responsive. 
+
+> **Note:**
+> If any of the steps above fail, confirm that the image was built with the AVF Build (Trusty disabled, AVF enabled) and that the required BIOS virtualization settings are enabled. Because Trusty and AVF are mutually exclusive, a build with Trusty enabled will not expose AVF. 
+
+---
 ## Reference Documents
 
-| Documentation on GitHub | Document No./Location |
-|---------|------------------------|
-| Android* 16 Base BSP Reference Release for Intel® Edge Platforms (supporting Intel® Core™ Processor (14th Gen)) Release Notes |  [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/README.md) |
-| Raptor Lake‑S Refresh Android Manifest File | [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/) |
+| Documentation on GitHub                                                                                                                                                                                        | Document No./Location                                                             |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355) Release Notes | [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/BM_BSP_2026_Q3_V2_A16/README.md)         |
+| Android Manifest File (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355)                                                          | [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/) |
 
 Log in to the Resource and Documentation Center ([rdc.intel.com](https://www.intel.com/content/www/us/en/resources-documentation/developer.html)) to search for and download the document numbers listed in the following table. Contact your Intel field representative for access.
 
@@ -439,6 +655,7 @@ Log in to the Resource and Documentation Center ([rdc.intel.com](https://www.int
 | Documentation on Intel RDC                                                                                                                                                                              | Document No./Location                                                                                                    |     |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --- |
 | 13th Gen Intel® Core™ Desktop Processors (Code named Raptor Lake-S) and Intel® Core™ Processor (14th Gen) (Code named Raptor Lake-S Refresh) for Edge Platforms Reference UEFI BIOS/IFWI (ver. 7117_51) | [852225](https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=852225) |     |
+| Intel® Processor N Series, Intel® Core™ i3-N305 Processor, Intel Atom® x7000,x7000RE&x7000C,x7000FE Processor Series, Intel® Processor N150&N250, Intel® Core™ 3 Processor N355 for Edge Applications (IPU2026.3) Firmware Best Known Configuration (BKC)   | [919389](https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=919389) |     |
 
 
 # Disclaimer
