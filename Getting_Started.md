@@ -1,6 +1,6 @@
 # Getting Started Guide
 ## Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen))
-Release 1.0 (PV release)
+Release 1.0
 
 July 2026
 
@@ -38,7 +38,6 @@ references, refer to the following documents:
 | NVMe            | Non-Volatile Memory Express                                            |
 | OS              | Operating System                                                       |
 | PCH‑IO          | Platform Controller Hub — I/O Configuration                            |
-| PV              | Production Version                                                     |
 | Raptor Lake-S R | Intel® Core™ Processor (14th Gen)                                      |
 | RDC             | Resource and Documentation Center                                      |
 | RVP             | Reference Validation Platform                                          |
