@@ -1,6 +1,6 @@
 # Getting Started Guide
 ## Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355)
-Release 1.1 (MR1 release)
+Release 1.1
 
 September 2026
 
@@ -15,7 +15,7 @@ You are recommended to review the release information before proceeding
 with this Getting Started Guide. For release information, notes, and
 references, refer to the following documents:
 
-* Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355) Release Notes (Published in [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/BM_BSP_2026_Q3_V2_A16/README.md))
+* Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355) Release Notes (Published in [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/README.md))
 
 # Terminology
 
@@ -221,7 +221,7 @@ AVF and Trusty cannot be enabled at the same time. Choose the build that matches
 > **Note:**
 > If you are building for Intel® Core™ 3 Processor N355, Intel® Processor N150, or Intel® Processor N250, use the **Default Build** — the AVF Build and Trusty Build are not available on these platforms.
 >
-> Each build below sets `lunch caas-userdebug` as the build target. Use `caas-userdebug` for development and debugging (includes root access and debug tools); use `caas-user` for a production-style build intended for release testing.
+> Each build below sets `lunch caas-userdebug` as the build target. Use `caas-userdebug` for development and debugging, including root access and debug tools. Use `caas-user` for a release-oriented configuration with reduced debugging capability.
 
 ### Default Build (Trusty Disabled, AVF Disabled)
 
@@ -582,6 +582,7 @@ Expected values:
 | `ro.boot.hypervisor.vm.supported`           | `1`            | Non-Protected VMs are supported            |
 | `ro.boot.hypervisor.protected_vm.supported` | `0`            | Protected VMs are not supported            |
 | `ro.boot.hypervisor.version`                | `kvm`          | This BSP identifies KVM as its hypervisor. |
+
 These properties advertise the platform’s hypervisor capabilities. However, these properties alone do not confirm that a VM can be launched successfully.
 ## Step 2: Confirm the KVM Device Node Is Present
 
@@ -643,7 +644,7 @@ The command should return successfully and report that non-protected VM support 
 
 | Documentation on GitHub                                                                                                                                                                                        | Document No./Location                                                             |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355) Release Notes | [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/BM_BSP_2026_Q3_V2_A16/README.md)         |
+| Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355) Release Notes | [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/README.md)         |
 | Android Manifest File (supporting Intel® Core™ Processor (14th Gen), Intel® Processor N150 & N250, Intel® Core™ 3 Processor N355)                                                          | [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/) |
 
 Log in to the Resource and Documentation Center ([rdc.intel.com](https://www.intel.com/content/www/us/en/resources-documentation/developer.html)) to search for and download the document numbers listed in the following table. Contact your Intel field representative for access.
@@ -677,4 +678,3 @@ manufacturer or retailer or learn more at [intel.com](http://intel.com/).
 The Bluetooth® word mark and logos are registered trademarks owned by Bluetooth SIG, Inc. and any use of such marks by Intel Corporation is under license.
 
 © Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.
-

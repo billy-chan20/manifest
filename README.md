@@ -1,6 +1,6 @@
 # Release Notes
 ## Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Core™ 3 Processor N355, Intel® Processor N150, and Intel® Processor N250)
-Release 1.1 (MR1 release)
+Release 1.1 
 
 September 2026
 
@@ -11,7 +11,7 @@ This document provides release specific information about the Android* 16 Base B
 >**Note:**
 >The versions of the Android Common Kernel and AOSP open-source software components referenced in this release represent the Intel-validated baseline for the platform. Customers are encouraged to evaluate and integrate updates to these open-source components as they become available from the open-source community.
 
-For instructions on building and loading Android* OS, refer to the Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Core™ 3 Processor N355, Intel® Processor N150, and Intel® Processor N250) Getting Started Guide (Published in [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/BM_BSP_2026_Q3_V2_A16/Getting_Started.md)).
+For instructions on building and loading Android* OS, refer to the Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Core™ 3 Processor N355, Intel® Processor N150, and Intel® Processor N250) Getting Started Guide (Published in [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/Getting_Started.md)).
 
 # Terminology
 
@@ -68,7 +68,7 @@ This section shows the compatible hardware and software configuration for this r
 
 This section contains general release information for BSP.
 
-### Release 1.1 (MR1 release) - Current
+### Release 1.1 - Current
 ### [Release 1.0](https://github.com/edge-aosp-bsp/manifest/tree/BM_BSP_2026_Q3_V1_A16)
 ### [Engineering Candidate 2 (EC2)](https://github.com/edge-aosp-bsp/manifest/tree/BM_BSP_2026_Q2_V1_A16)
 ### [Engineering Candidate 1 (EC1)](https://github.com/edge-aosp-bsp/manifest/tree/BM_BSP_2026_Q1_V1_A16)
@@ -76,23 +76,23 @@ This section contains general release information for BSP.
 ---
 
 
-## Release 1.1 (MR1 release)
+## Release 1.1
 
 ## Software Configuration
-1. Release 1.1 (MR1 release) Manifest File: [GitHub - BM_BSP_2026_Q3_V2_A16.xml](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/BM_BSP_2026_Q3_V2_A16.xml)
+1. Release 1.1 Manifest File: [GitHub - BM_BSP_2026_Q3_V2_A16.xml](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/BM_BSP_2026_Q3_V2_A16.xml)
 2. UEFI Reference BIOS:
    - Release Notes & Package for RPL [852225](https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=852225)
    - Release Notes & Package for TWL [919389](https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=919389)
 
 ## Release Version
-| Type | Description |
-|------|-------------|
-| Release Version | Release 1.1 (MR1 release) |
-| Build Target | caas-userdebug, caas-user |
-| RPL Tested Hardware | SR14 Raptor Lake-S DDR5 UDIMM 1DPC RVP and Intel® Core™ Processor (14th Gen) |
+| Type                | Description                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------------- |
+| Release Version     | Release 1.1                                                                               |
+| Build Target        | caas-userdebug, caas-user                                                                 |
+| RPL Tested Hardware | SR14 Raptor Lake-S DDR5 UDIMM 1DPC RVP and Intel® Core™ Processor (14th Gen)              |
 | TWL Tested Hardware | Twin Lake Intel® Core™ 3 Processor N355, Intel® Processor N150, and Intel® Processor N250 |
-| Android Version | android-16 |
-| Kernel Version | 6.12.92 |
+| Android Version     | android-16                                                                                |
+| Kernel Version      | 6.12.92                                                                                   |
 
 ## Product Features
 #### List of Product Features
@@ -131,7 +131,7 @@ This section contains general release information for BSP.
 
 | Documentation on GitHub | Document No./Location |
 |---------|------------------------|
-|Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Core™ 3 Processor N355, Intel® Processor N150, and Intel® Processor N250) - Getting Started Guide |  [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/BM_BSP_2026_Q3_V2_A16/Getting_Started.md) |
+|Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen), Intel® Core™ 3 Processor N355, Intel® Processor N150, and Intel® Processor N250) - Getting Started Guide |  [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/Getting_Started.md) |
 | Android Manifest File | [GitHub](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/BM_BSP_2026_Q3_V2_A16.xml) |
 
 Log in to the Resource and Documentation Center
@@ -186,4 +186,3 @@ under license.
 © Intel Corporation. Intel, the Intel logo, and other Intel marks are
 trademarks of Intel Corporation or its subsidiaries. Other names and
 brands may be claimed as the property of others.
-
