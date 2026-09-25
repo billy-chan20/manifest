@@ -1,6 +1,6 @@
 # Release Notes
 ## Android* 16 Base BSP Reference Release for Edge Platforms (supporting Intel® Core™ Processor (14th Gen))
-Release 1.0 (PV release)
+Release 1.0
 
 July 2026
 
@@ -61,24 +61,24 @@ This section shows the compatible hardware and software configuration for this r
 
 This section contains general release information for BSP.
 
-### Production Version (PV) - Current
+### Release 1.0 - Current
 ### [Engineering Candidate 2 (EC2)](https://github.com/edge-aosp-bsp/manifest/tree/BM_BSP_2026_Q2_V1_A16)
 ### [Engineering Candidate 1 (EC1)](https://github.com/edge-aosp-bsp/manifest/tree/BM_BSP_2026_Q1_V1_A16)
 
 ---
 
 
-## Production Version (PV)
+## Release 1.0
 
 ## Software Configuration
-1. PV Manifest File: [GitHub - BM_BSP_2026_Q3_V1_A16.xml](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/BM_BSP_2026_Q3_V1_A16.xml)
+1. Manifest File: [GitHub - BM_BSP_2026_Q3_V1_A16.xml](https://github.com/edge-aosp-bsp/manifest/blob/master/stable-build/A16/BM_BSP_2026_Q3_V1_A16.xml)
 2. UEFI Reference BIOS:
    - Release Notes & Package [852225](https://www.intel.com/content/www/us/en/secure/design/confidential/software-kits/kit-details.html?kitId=852225)
 
 ## Release Version
 | Type | Description |
 |------|-------------|
-| Release Version | Production Version (PV) |
+| Release Version | Release 1.0 |
 | Build Target | caas-userdebug, caas-user |
 | Tested Hardware | SR14 Raptor Lake-S DDR5 UDIMM 1DPC RVP and Intel® Core™ Processor (14th Gen) |
 | Android Version | android-16 |
